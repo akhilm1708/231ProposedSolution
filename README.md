@@ -1,4 +1,4 @@
-# ~Akhil, Karthik, Isaac, Krishna 2.3.1: Autonomous Local Road Navigation with Traffic Law Compliance~
+# Akhil, Karthik, Isaac, Krishna 2.3.1: Autonomous Local Road Navigation with Traffic Law Compliance
 
 ## Overview
 
