@@ -71,8 +71,14 @@ class SimpleOrderApp:
         current_quantity = self.order[item].get()
         new_quantity = max(0, current_quantity + change)
         self.order[item].set(new_quantity)
-        self.update_total()
 
+        if item == "Small Fries" and new_quantity > 0:
+            response = tk.messagebox.askyesno("Megasize Fries", "Would you like to mega-size your fries?")
+            if response:
+                self.menu["Appetizers"]["Small Fries"] = self.menu["Appetizers"]["Large Fries"]
+
+        self.update_total()
+    
     def update_total(self):
         self.total_price = sum(self.menu[category][item] * self.order[item].get() for category in self.menu for item in self.menu[category])
         self.total_label.config(text=f"Total: ${self.total_price:.2f}")
@@ -81,10 +87,13 @@ class SimpleOrderApp:
         summary = "Your Order:\n"
         for item, quantity in self.order.items():
             if quantity.get() > 0:
-                summary += f"- {item}: {quantity.get()}\n"
+                total_item_price = self.menu[next(category for category in self.menu if item in self.menu[category])][item] * quantity.get()
+                summary += f"- {quantity.get()}x {item} (${total_item_price:.2f})\n"
         summary += f"Total Price: ${self.total_price:.2f}"
         tk.messagebox.showinfo("Order Summary", summary)
         self.root.quit()
+
+
 
 root = tk.Tk()
 app = SimpleOrderApp(root)
